@@ -106,4 +106,28 @@ public class PrimeUtil {
 
         return primes;
     }
+
+    public int getGCD(int a, int b) {
+        while (b != a) {
+            int temp = b;
+            b = a % b;
+            a = temp;
+        }
+        return a;
+    }
+
+    public int getGCD_binary(int a, int b) {
+        if (a == 0) return b;
+        if (b == 0) return a;
+
+        if ((a & 1) == 0 && (b & 1) == 0) return getGCD_binary(a >> 1, b >> 1) << 1;
+        else if ((a & 1) == 0) return getGCD_binary(a >> 1, b);
+        else if ((b & 1) == 0) return getGCD_binary(a, b >> 1);
+        else return getGCD_binary(Math.abs(a - b), Math.min(a,b));
+    }
+
+    public int getLCM(int a, int b) {
+        if (a > Integer.MAX_VALUE / b) throw new IllegalArgumentException("Overflow");
+        return ((a*b)/getGCD(a,b));
+    }
 }
